@@ -17,6 +17,8 @@ function addTask() {
             alertElement.style.display = 'none';
         }
 
+        inputField.value = '';
+
         const taskItem = document.createElement('li');
         const taskTextSpan = document.createElement('span');
         taskTextSpan.textContent = taskText;
