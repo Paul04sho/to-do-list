@@ -4,6 +4,8 @@ const addButton = document.getElementById('addBtn');
 const todoListContainer = document.getElementById('to-do-list');
 const alertElement = document.querySelector('.alert-text');
 
+const key = 'tasks';
+let todos = [];
 
 // Fonction pour ajouter une tâche
 function addTask() {
@@ -17,20 +19,19 @@ function addTask() {
             alertElement.style.display = 'none';
         }
 
-        const taskItem = document.createElement('li');
-        const taskTextSpan = document.createElement('span');
-        taskTextSpan.textContent = taskText;
-        taskItem.appendChild(taskTextSpan);
+        // Créer un objet tâche et l'ajouter au tableau
+        const newTask = {
+            text: taskText,
+            completed: false
+        };
 
-        todoListContainer.appendChild(taskItem);
+        todos.push(newTask);
+        saveTasks();
+        createTaskElement(newTask.text, newTask.completed);
 
-        // Ajout de la case à cocher
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        taskItem.appendChild(checkbox);
+        // Vider le champ de saisie après l'ajout
+        inputField.value = '';
 
-        deleteTask(taskItem, todoListContainer);
-        return taskItem;
     });
 };
 
@@ -54,7 +55,7 @@ function deleteTask() {
     const deleteButton = document.createElement('button');
     deleteButton.className = 'deleteBtn'; // Pour le style
     const icon = document.createElement('i');
-    icon.className = 'fa fa-trash'; // Classe FontAwesome pour l'icône de la corbeille
+    icon.className = 'fas fa-trash-alt'; // Classe FontAwesome pour l'icône de la corbeille
     deleteButton.appendChild(icon);
     const taskElement = todoListContainer.lastChild;
 
@@ -69,7 +70,66 @@ function deleteTask() {
     taskElement.appendChild(deleteButton);
 };
 
+// Fonction pour charger les tâches depuis le localStorage
+function loadTasks() {
+    const storedTasks = localStorage.getItem(key);
+
+    if (storedTasks) {
+        todos = JSON.parse(storedTasks);
+        todos.forEach(task => createTaskElement(task.text, task.completed));
+    }
+    console.log(todos);
+}
+
+// Fonction pour sauvegarder les tâches dans le localStorage
+function saveTasks() {
+    localStorage.setItem(key, JSON.stringify(todos));
+    console.log(todos);
+}
+
+function createTaskElement(text, completed = false) {
+    const taskItem = document.createElement('li');
+
+    const taskTextSpan = document.createElement('span');
+    taskTextSpan.textContent = taskText;
+    taskItem.appendChild(taskTextSpan);
+
+    // Ajout de la case à cocher
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = completed;
+    taskItem.appendChild(checkbox);
+
+    if (completed) {
+        taskItem.classList.add('completed');
+    }
+
+    // Ajout du bouton de suppression
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'deleteBtn';
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-trash-alt';
+    deleteButton.appendChild(icon);
+    taskItem.appendChild(deleteButton);
+
+    checkbox.addEventListener("change", () => {
+        taskItem.classList.toggle("completed");
+        const index = [...todoListContainer.children].indexOf(taskItem);
+        todos[index].completed = checkbox.checked;
+        saveTasks();
+    });
+
+    deleteButton.addEventListener("click", () => {
+        const index = [...todoListContainer.children].indexOf(taskItem);
+        todos.splice(index, 1);
+        taskItem.remove();
+        saveTasks();
+    });
+
+    todoListContainer.appendChild(taskItem);
+}
+
 
 // Appel des fonctions
 addTask();
-completedTask();
+loadTasks();
