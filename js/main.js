@@ -56,7 +56,7 @@ function deleteTask() {
     const deleteButton = document.createElement('button');
     deleteButton.className = 'deleteBtn'; // Pour le style
     const icon = document.createElement('i');
-    icon.className = 'fa fa-trash'; // Classe FontAwesome pour l'icône de la corbeille
+    icon.className = 'fas fa-trash-alt'; // Classe FontAwesome pour l'icône de la corbeille
     deleteButton.appendChild(icon);
     const taskElement = todoListContainer.lastChild;
 
