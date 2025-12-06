@@ -2,11 +2,20 @@
 const inputField = document.getElementById('taskInput');
 const addButton = document.getElementById('addBtn');
 const todoListContainer = document.getElementById('to-do-list');
+const alertElement = document.querySelector('.alert-text');
+
 
 // Fonction pour ajouter une tâche
 function addTask() {
     addButton.addEventListener("click", () => {
         const taskText = inputField.value.trim();
+
+        if (taskText === '') {
+            alertElement.style.display = 'block';
+            return;
+        } else {
+            alertElement.style.display = 'none';
+        }
 
         const taskItem = document.createElement('li');
         const taskTextSpan = document.createElement('span');
@@ -23,8 +32,8 @@ function addTask() {
         deleteTask(taskItem, todoListContainer);
         return taskItem;
     });
-    saveTasksToLocalStorage();
 };
+
 
 // Fonction pour marquer une tâche comme terminée
 function completedTask() {
@@ -38,7 +47,6 @@ function completedTask() {
             }
         });
    });
-   saveTasksToLocalStorage();
 };
 
 // Fonction pour supprimer des tâches
@@ -59,79 +67,9 @@ function deleteTask() {
         }
     });
     taskElement.appendChild(deleteButton);
-    saveTasksToLocalStorage();
 };
-
-// Sauvegarder toutes les tâches dans le localStorage
-function saveTasksToLocalStorage() {
-    const tasks = [];
-    const allTasks = todoListContainer.querySelectorAll('li');
-
-    allTasks.forEach(task => {
-        const text = task.querySelector('span')
-        ? task.querySelector('span').textContent
-        : task.firstChild.textContent;
-
-        const isCompleted = task.classList.contains('completed');
-
-        tasks.push({
-            text: text,
-            completed: isCompleted
-        });
-    });
-
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-// Charger les tâches depuis le localStorage au démarrage
-function loadTasksFromLocalStorage() {
-    const tasks = JSON.parse(localStorage.getItem('tasks'));
-
-    if (!tasks) return;
-
-    tasks.forEach(task => {
-        const taskItem = document.createElement('li');
-
-        const span = document.createElement('span');
-        span.textContent = task.text;
-        taskItem.appendChild(span);
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = task.completed;
-        taskItem.appendChild(checkbox);
-
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'deleteBtn';
-        const icon = document.createElement('i');
-        icon.className = 'fa fa-trash';
-        deleteButton.appendChild(icon);
-        taskItem.appendChild(deleteButton);
-
-        if (task.completed) {
-            taskItem.classList.add('completed');
-        }
-
-        checkbox.addEventListener("change", () => {
-            if (checkbox.checked) {
-                taskItem.classList.add("completed");
-            } else {
-                taskItem.classList.remove("completed");
-            }
-            saveTasksToLocalStorage();
-        });
-
-        deleteButton.addEventListener("click", () => {
-            todoListContainer.removeChild(taskItem);
-            saveTasksToLocalStorage();
-        });
-
-        todoListContainer.appendChild(taskItem);
-    });
-}
 
 
 // Appel des fonctions
 addTask();
 completedTask();
-loadTasksFromLocalStorage();
