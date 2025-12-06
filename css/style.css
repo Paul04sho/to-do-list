@@ -1,3 +1,4 @@
+
 /*  Styles généraux */
 body {
     font-family: Arial, sans-serif;
@@ -20,11 +21,15 @@ body {
 h1 {
     color: #333;
     text-align: center;
+    padding: 20px 0;
 }
 
 .input-container {
     display: flex;
-    margin-bottom: 20px;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 input[type="text"] {
@@ -34,16 +39,29 @@ input[type="text"] {
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
+    margin-top: 0;
+}
+
+.alert-text {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-top: 6px;
+    color: red;
+    font-size: 14px;
+    font-weight: 700;
+    display: none;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background-color: #28a745;
     border: none;
     border-radius: 5px;
     color: #fff;
     font-weight: 700;
     cursor: pointer;
+    margin-top: 0;
 }
 
 button:hover {
@@ -95,13 +113,10 @@ li input[type="checkbox"] {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    max-width: 32px;
+    min-width: 32px;
 }
 
 .deleteBtn:hover {
     background-color: #d32f2f;
     transform: scale(1.05);
 }
-
-
-
