@@ -8,7 +8,7 @@ body {
 
 /* Styles appliqués à la page en ciblant le conteneur, le champ de saisie, le bouton et le titre */
 .container {
-    max-width: 400px;
+    max-width: 480px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -25,7 +25,10 @@ h1 {
 
 .input-container {
     display: flex;
-    margin-bottom: 20px;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 input[type="text"] {
@@ -35,16 +38,29 @@ input[type="text"] {
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
+    margin-top: 0;
+}
+
+.alert-text {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-top: 6px;
+    color: red;
+    font-size: 14px;
+    font-weight: 700;
+    display: none;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background-color: #28a745;
     border: none;
     border-radius: 5px;
     color: #fff;
     font-weight: 700;
     cursor: pointer;
+    margin-top: 0;
 }
 
 button:hover {
@@ -58,6 +74,7 @@ ul {
 
 li {
     display: flex;
+    gap: 12px;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #ccc;
@@ -65,12 +82,43 @@ li {
     padding: 10px;
     margin-bottom: 10px;
     background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+li span {
+    flex: 1;
+    font-size: 16px;
+}
+
+li input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 /* Classe pour marquer qu'une tache est terminée */
 .completed {
     text-decoration: line-through;
     color: #888;
+    opacity: 0.6;
 }
+
+/* Aspect du bouton "supprimer" */
+.deleteBtn {
+    background-color: #f44336;
+    color: white;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 32px;
+}
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
 
 
