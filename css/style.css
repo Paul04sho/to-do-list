@@ -14,8 +14,8 @@ body {
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 80px;
     border-radius: 8px;
+    margin-top: 180px;
 }
 
 h1 {
@@ -121,4 +121,38 @@ li input[type="checkbox"] {
 .deleteBtn:hover {
     background-color: #d32f2f;
     transform: scale(1.05);
+}
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 600px) {
+    .container {
+        max-width: 80%;
+        margin-top: 100px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 15px 0;
+    }
+
+    input[type="text"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    li span {
+        font-size: 14px;
+    }
+
+    .deleteBtn {
+        padding: 3px 6px;
+        font-size: 12px;
+        min-width: 28px;
+    }
 }
